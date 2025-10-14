@@ -3,7 +3,10 @@
     "name": "laravel/laravel",
     "type": "project",
     "description": "The skeleton application for the Laravel framework.",
-    "keywords": ["laravel", "framework"],
+    "keywords": [
+        "laravel",
+        "framework"
+    ],
     "license": "MIT",
     "require": {
         "php": "^8.2",
@@ -58,6 +61,22 @@
         "test": [
             "@php artisan config:clear --ansi",
             "@php artisan test"
+        ],
+        "push": [
+            "git add .",
+            "git commit -m \"Update\"",
+            "git push origin master"
+        ],
+        "deploy": [
+            "@php artisan migrate --force --ansi",
+            "@php artisan view:clear --ansi",
+            "@php artisan cache:clear --ansi",
+            "@php artisan config:clear --ansi",
+            "@php artisan route:clear --ansi",
+            "@php artisan view:cache --ansi",
+            "@php artisan config:cache --ansi",
+            "@php artisan route:cache --ansi",
+            "git push production master"
         ]
     },
     "extra": {

@@ -69,9 +69,6 @@
         ],
         "deploy": [
             "git push production master"
-        ],
-        "status": [
-            "git status"
         ]
     },
     "extra": {

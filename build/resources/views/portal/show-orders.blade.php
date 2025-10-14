@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,15 +7,14 @@
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
-
+    
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;600;700;800&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
     <style>
         :root {
@@ -243,7 +241,6 @@
             position: relative;
             margin-bottom: 2rem;
         }
-
         .status-tracker::before {
             content: '';
             position: absolute;
@@ -255,13 +252,11 @@
             transform: translateY(-50%);
             z-index: 1;
         }
-
         .status-step {
             position: relative;
             z-index: 2;
             text-align: center;
         }
-
         .status-icon {
             width: 50px;
             height: 50px;
@@ -275,13 +270,11 @@
             border: 2px solid #e9ecef;
             transition: all 0.3s ease;
         }
-
         .status-step.active .status-icon {
             background-color: #0d6efd;
             color: white;
             border-color: #0d6efd;
         }
-
         .status-step.completed .status-icon {
             background-color: #198754;
             color: white;
@@ -289,7 +282,6 @@
         }
     </style>
 </head>
-
 <body>
 
     <!-- ======================= Header المحسّن ======================= -->
@@ -367,116 +359,111 @@
         </div>
 
         @forelse ($orders as $order )
-        @php
-        $isReceived = true;
-        $isInProgress = in_array($order->status, ['جاري التنفيذ', 'جاهز للتسليم', 'تم التسليم']);
-        $isReady = in_array($order->status, ['جاهز للتسليم', 'تم التسليم']);
-        $isDelivered = $order->status === 'تم التسليم';
-        @endphp
+            @php
+                $isReceived = true;
+                $isInProgress = in_array($order->status, ['جاري التنفيذ', 'جاهز للتسليم', 'تم التسليم']);
+                $isReady = in_array($order->status, ['جاهز للتسليم', 'تم التسليم']);
+                $isDelivered = $order->status === 'تم التسليم';
+            @endphp
 
-        <div class="card shadow-sm mb-4">
-            <div class="card-header bg-light d-flex justify-content-between align-items-center flex-wrap">
-                <h5 class="mb-0 me-3">طلب رقم: {{ $order->order_number }}</h5>
-                <span class="badge bg-dark">{{ $order->order_date }}</span>
-            </div>
-            <div class="card-body p-4">
-                {{-- شريط تتبع الحالة --}}
-                <div class="status-tracker">
-                    <div class="status-step {{ $isReceived ? 'completed' : '' }}">
-                        <div class="status-icon"><i class="bi bi-journal-check fs-4"></i></div>
-                        <p>تم الاستلام</p>
-                    </div>
-                    <div
-                        class="status-step {{ $isInProgress ? ($isReady || $isDelivered ? 'completed' : 'active') : '' }}">
-                        <div class="status-icon"><i class="bi bi-palette-fill fs-4"></i></div>
-                        <p>جاري التنفيذ</p>
-                    </div>
-                    <div class="status-step {{ $isReady ? ($isDelivered ? 'completed' : 'active') : '' }}">
-                        <div class="status-icon"><i class="bi bi-bag-check-fill fs-4"></i></div>
-                        <p>جاهز للتسليم</p>
-                    </div>
-                    <div class="status-step {{ $isDelivered ? 'completed' : '' }}">
-                        <div class="status-icon"><i class="bi bi-house-check-fill fs-4"></i></div>
-                        <p>تم التسليم</p>
-                    </div>
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-light d-flex justify-content-between align-items-center flex-wrap">
+                    <h5 class="mb-0 me-3">طلب رقم: {{ $order->order_number }}</h5>
+                    <span class="badge bg-dark">{{ $order->order_date }}</span>
                 </div>
+                <div class="card-body p-4">
+                    {{-- شريط تتبع الحالة --}}
+                    <div class="status-tracker">
+                        <div class="status-step {{ $isReceived ? 'completed' : '' }}">
+                            <div class="status-icon"><i class="bi bi-journal-check fs-4"></i></div>
+                            <p>تم الاستلام</p>
+                        </div>
+                        <div class="status-step {{ $isInProgress ? ($isReady || $isDelivered ? 'completed' : 'active') : '' }}">
+                            <div class="status-icon"><i class="bi bi-palette-fill fs-4"></i></div>
+                            <p>جاري التنفيذ</p>
+                        </div>
+                        <div class="status-step {{ $isReady ? ($isDelivered ? 'completed' : 'active') : '' }}">
+                            <div class="status-icon"><i class="bi bi-bag-check-fill fs-4"></i></div>
+                            <p>جاهز للتسليم</p>
+                        </div>
+                        <div class="status-step {{ $isDelivered ? 'completed' : '' }}">
+                            <div class="status-icon"><i class="bi bi-house-check-fill fs-4"></i></div>
+                            <p>تم التسليم</p>
+                        </div>
+                    </div>
 
-                {{-- التفاصيل المالية --}}
-                <div class="row border-top pt-3 align-items-center">
-                    <div class="col-md-8">
-                        <h6 class="mb-3">ملخص مالي:</h6>
-                        <ul class="list-unstyled">
-                            <li><strong>الإجمالي بعد الخصم:</strong> {{
-                                number_format($order->payment->total_after_discount, 2) }} جنيه</li>
-                            <li><strong>المدفوع:</strong> {{ number_format($order->payment->total_paid, 2) }} جنيه</li>
+                    {{-- التفاصيل المالية --}}
+                    <div class="row border-top pt-3 align-items-center">
+                        <div class="col-md-8">
+                            <h6 class="mb-3">ملخص مالي:</h6>
+                            <ul class="list-unstyled">
+                                <li><strong>الإجمالي بعد الخصم:</strong> {{ number_format($order->payment->total_after_discount, 2) }} جنيه</li>
+                                <li><strong>المدفوع:</strong> {{ number_format($order->payment->total_paid, 2) }} جنيه</li>
+                                @if($order->payment->remaining_amount > 0.01)
+                                    <li class="text-danger fs-5"><strong>المتبقي: {{ number_format($order->payment->remaining_amount, 2) }} جنيه</strong></li>
+                                @endif
+                            </ul>
+                        </div>
+                        <div class="col-md-4 text-md-end">
                             @if($order->payment->remaining_amount > 0.01)
-                            <li class="text-danger fs-5"><strong>المتبقي: {{
-                                    number_format($order->payment->remaining_amount, 2) }} جنيه</strong></li>
+                                <button class="btn btn-success btn-lg" data-bs-toggle="modal" data-bs-target="#paymentInfoModal-{{ $order->id }}">
+                                    <i class="bi bi-whatsapp"></i> كيفية السداد
+                                </button>
                             @endif
-                        </ul>
-                    </div>
-                    <div class="col-md-4 text-md-end">
-                        @if($order->payment->remaining_amount > 0.01)
-                        <button class="btn btn-success btn-lg" data-bs-toggle="modal"
-                            data-bs-target="#paymentInfoModal-{{ $order->id }}">
-                            <i class="bi bi-whatsapp"></i> كيفية السداد
-                        </button>
-                        @endif
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Modal لكيفية السداد -->
-        <div class="modal fade" id="paymentInfoModal-{{ $order->id }}" tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">طرق السداد المتاحة</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p>عزيزنا العميل، يمكنك سداد المبلغ المتبقي وقدره <strong>{{
-                                number_format($order->payment->remaining_amount, 2) }} جنيه</strong> عبر إحدى الطرق
-                            التالية:</p>
-                        <h6>1. تطبيق بنكك:</h6>
-                        <ul class="list-unstyled ps-3">
-                            <li><strong>اسم الحساب:</strong> السفير جللابية</li>
-                            <li><strong>رقم الحساب:</strong> 1722024</li>
-                            <li><strong>البنك:</strong> بنك الخرطوم</li>
-                        </ul>
-                        <h6>2. تطبيق فوري :</h6>
-                        <ul class="list-unstyled ps-3">
-                            <li><strong>اسم الحساب:</strong> قريبا ... </li>
-                            <li><strong>رقم الحساب:</strong> قريبا ...</li>
-                            <li><strong>البنك:</strong> بنك فيصل الاسلامي</li>
-                        </ul>
-                        <h6>3. تطبيق اوكاش:</h6>
-                        <ul class="list-unstyled ps-3">
-                            <li><strong>اسم الحساب:</strong> قريبا ... </li>
-                            <li><strong>رقم الحساب:</strong> قريبا ...</li>
-                            <li><strong>البنك:</strong> بنك امدرمان الوطني </li>
-                        </ul>
-                        <h6>4. الدفع عند الاستلام.</h6>
-                        <hr>
-                        <p class="fw-bold">ملاحظة: بعد التحويل، يرجى إرسال إشعار الدفع عبر واتساب.</p>
-                        <a href="https://wa.me/+249915256159?text=مرحباً، أود تأكيد سداد دفعة للطلب رقم {{ $order->order_number }}"
+            <!-- Modal لكيفية السداد -->
+            <div class="modal fade" id="paymentInfoModal-{{ $order->id }}" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">طرق السداد المتاحة</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>عزيزنا العميل، يمكنك سداد المبلغ المتبقي وقدره <strong>{{ number_format($order->payment->remaining_amount, 2) }} جنيه</strong> عبر إحدى الطرق التالية:</p>
+                            <h6>1. تطبيق بنكك:</h6>
+                            <ul class="list-unstyled ps-3">
+                                <li><strong>اسم الحساب:</strong> السفير جلابية</li>
+                                <li><strong>رقم الحساب:</strong> 1722024 </li>
+                                <li><strong>البنك:</strong> بنك الخرطوم </li>
+                            </ul>
+                            <h6>2. تطبيق فوري:</h6>
+                            <ul class="list-unstyled ps-3">
+                                <li><strong>اسم الحساب:</strong> فوري </li>
+                                <li><strong>رقم الحساب:</strong> قريبا ... </li>
+                                <li><strong>البنك:</strong> بنك فيصل </li>
+                            </ul>
+                            <h6>3. تطبيق اوكاش:</h6>
+                            <ul class="list-unstyled ps-3">
+                                <li><strong>اسم الحساب:</strong> اوكاش</li>
+                                <li><strong>رقم الحساب:</strong> قريبا ... </li>
+                                <li><strong>البنك:</strong> بنك امدرمان الوطني </li>
+                            </ul>
+                            <h6>4. الدفع عند الاستلام.</h6>
+                            <hr>
+                            <p class="fw-bold">ملاحظة: بعد التحويل، يرجى إرسال إشعار الدفع عبر واتساب.</p>
+                            <a href="https://api.whatsapp.com/send?phone=+249915056159&text={{ rawurlencode('مرحباً، أود تأكيد سداد دفعة للطلب رقم ' . $order->order_number) }}" 
                             class="btn btn-success w-100" target="_blank">
                             <i class="bi bi-whatsapp"></i> إرسال إشعار التحويل
-                        </a>
+                            </a>
+
+
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
         @empty
-        <div class="text-center card shadow-sm p-5">
-            <p class="lead">لا توجد أي طلبات مسجلة بهذا الرقم.</p>
-        </div>
+            <div class="text-center card shadow-sm p-5">
+                <p class="lead">لا توجد أي طلبات مسجلة بهذا الرقم.</p>
+            </div>
         @endforelse
     </main>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>
+

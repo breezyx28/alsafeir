@@ -68,14 +68,6 @@
             "git push origin master"
         ],
         "deploy": [
-            "@php artisan migrate --force --ansi",
-            "@php artisan view:clear --ansi",
-            "@php artisan cache:clear --ansi",
-            "@php artisan config:clear --ansi",
-            "@php artisan route:clear --ansi",
-            "@php artisan view:cache --ansi",
-            "@php artisan config:cache --ansi",
-            "@php artisan route:cache --ansi",
             "git push production master"
         ]
     },
